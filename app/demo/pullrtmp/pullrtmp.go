@@ -1,5 +1,5 @@
 // Copyright 2019, Chef.  All rights reserved.
-// https://github.com/q191201771/lal
+// https://github.com/cool9850311/lal-StreamPlatformLite
 //
 // Use of this source code is governed by a MIT-style license
 // that can be found in the License file.
@@ -11,7 +11,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/q191201771/lal/pkg/remux"
 	"os"
 	"strconv"
 	"strings"
@@ -19,10 +18,12 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/q191201771/lal/pkg/base"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/remux"
 
-	"github.com/q191201771/lal/pkg/httpflv"
-	"github.com/q191201771/lal/pkg/rtmp"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/base"
+
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/httpflv"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/rtmp"
 	"github.com/q191201771/naza/pkg/nazalog"
 )
 

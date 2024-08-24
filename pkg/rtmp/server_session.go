@@ -1,5 +1,5 @@
 // Copyright 2019, Chef.  All rights reserved.
-// https://github.com/q191201771/lal
+// https://github.com/cool9850311/lal-StreamPlatformLite
 //
 // Use of this source code is governed by a MIT-style license
 // that can be found in the License file.
@@ -17,7 +17,7 @@ import (
 
 	"github.com/q191201771/naza/pkg/nazaerrors"
 
-	"github.com/q191201771/lal/pkg/base"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/base"
 
 	"github.com/q191201771/naza/pkg/bele"
 	"github.com/q191201771/naza/pkg/connection"
@@ -466,7 +466,7 @@ func (s *ServerSession) doPublish(tid int, stream *Stream) (err error) {
 	s.url = fmt.Sprintf("%s/%s", s.tcUrl, s.streamNameWithRawQuery)
 
 	pubType, err := stream.msg.readStringWithType()
-	// 兼容 https://github.com/q191201771/lal/issues/280
+	// 兼容 https://github.com/cool9850311/lal-StreamPlatformLite/issues/280
 	// 没有 pubType 时，继续走后面的流程
 	if err != nil {
 		Log.Warnf("[%s] read pubType failed. err=%s", s.UniqueKey(), err)

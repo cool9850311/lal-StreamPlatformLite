@@ -1,5 +1,5 @@
 // Copyright 2022, Chef.  All rights reserved.
-// https://github.com/q191201771/lal
+// https://github.com/cool9850311/lal-StreamPlatformLite
 //
 // Use of this source code is governed by a MIT-style license
 // that can be found in the License file.
@@ -13,11 +13,11 @@ import (
 	"os"
 	"testing"
 
-	"github.com/q191201771/lal/pkg/base"
-	"github.com/q191201771/lal/pkg/hevc"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/base"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/hevc"
 	"github.com/q191201771/naza/pkg/nazamd5"
 
-	"github.com/q191201771/lal/pkg/avc"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/avc"
 	"github.com/q191201771/naza/pkg/nazabytes"
 	"github.com/q191201771/naza/pkg/nazalog"
 )

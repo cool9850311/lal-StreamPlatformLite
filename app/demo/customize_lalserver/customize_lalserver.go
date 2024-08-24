@@ -1,5 +1,5 @@
 // Copyright 2022, Chef.  All rights reserved.
-// https://github.com/q191201771/lal
+// https://github.com/cool9850311/lal-StreamPlatformLite
 //
 // Use of this source code is governed by a MIT-style license
 // that can be found in the License file.
@@ -11,23 +11,24 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/q191201771/lal/pkg/rtsp"
 	"os"
 	"time"
 
-	"github.com/q191201771/lal/pkg/aac"
-	"github.com/q191201771/lal/pkg/avc"
-	"github.com/q191201771/lal/pkg/httpflv"
-	"github.com/q191201771/lal/pkg/remux"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/rtsp"
+
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/aac"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/avc"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/httpflv"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/remux"
 	"github.com/q191201771/naza/pkg/nazalog"
 
-	"github.com/q191201771/lal/pkg/base"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/base"
 
-	"github.com/q191201771/lal/pkg/logic"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/logic"
 	"github.com/q191201771/naza/pkg/bininfo"
 )
 
-// 注意，使用这个demo时，请确保这三个文件存在，文件下载地址 https://github.com/q191201771/lalext/tree/master/avfile
+// 注意，使用这个demo时，请确保这三个文件存在，文件下载地址 https://github.com/cool9850311/lal-StreamPlatformLiteext/tree/master/avfile
 const (
 	h264filename = "/tmp/test.h264"
 	aacfilename  = "/tmp/test.aac"

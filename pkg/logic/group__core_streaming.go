@@ -1,5 +1,5 @@
 // Copyright 2022, Chef.  All rights reserved.
-// https://github.com/q191201771/lal
+// https://github.com/cool9850311/lal-StreamPlatformLite
 //
 // Use of this source code is governed by a MIT-style license
 // that can be found in the License file.
@@ -11,19 +11,19 @@ package logic
 import (
 	"net"
 
-	"github.com/q191201771/lal/pkg/rtsp"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/rtsp"
 
-	"github.com/q191201771/lal/pkg/rtmp"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/rtmp"
 	"github.com/q191201771/naza/pkg/nazalog"
 
-	"github.com/q191201771/lal/pkg/mpegts"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/mpegts"
 
-	"github.com/q191201771/lal/pkg/avc"
-	"github.com/q191201771/lal/pkg/base"
-	"github.com/q191201771/lal/pkg/hevc"
-	"github.com/q191201771/lal/pkg/remux"
-	"github.com/q191201771/lal/pkg/rtprtcp"
-	"github.com/q191201771/lal/pkg/sdp"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/avc"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/base"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/hevc"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/remux"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/rtprtcp"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/sdp"
 )
 
 // group__streaming.go

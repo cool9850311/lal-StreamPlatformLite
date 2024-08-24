@@ -52,7 +52,7 @@ done
 for name in ${NAMES[@]};
 do
   echo ${v} >> ${OUT_DIR}/${prefix}${name}/README.txt
-  echo 'github: https://github.com/q191201771/lal ' >> ${OUT_DIR}/${prefix}${name}/README.txt
+  echo 'github: https://github.com/cool9850311/lal-StreamPlatformLite ' >> ${OUT_DIR}/${prefix}${name}/README.txt
   echo 'doc: https://pengrl.com/lal ' >> ${OUT_DIR}/${prefix}${name}/README.txt
 done
 

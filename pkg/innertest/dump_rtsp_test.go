@@ -1,5 +1,5 @@
 // Copyright 2022, Chef.  All rights reserved.
-// https://github.com/q191201771/lal
+// https://github.com/cool9850311/lal-StreamPlatformLite
 //
 // Use of this source code is governed by a MIT-style license
 // that can be found in the License file.
@@ -9,15 +9,16 @@
 package innertest
 
 import (
-	"github.com/q191201771/lal/pkg/base"
-	"github.com/q191201771/lal/pkg/httpflv"
-	"github.com/q191201771/lal/pkg/remux"
-	"github.com/q191201771/lal/pkg/rtprtcp"
-	"github.com/q191201771/lal/pkg/rtsp"
-	"github.com/q191201771/lal/pkg/sdp"
-	"github.com/q191201771/naza/pkg/nazalog"
 	"io"
 	"testing"
+
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/base"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/httpflv"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/remux"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/rtprtcp"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/rtsp"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/sdp"
+	"github.com/q191201771/naza/pkg/nazalog"
 )
 
 // TestDump_Rtsp
