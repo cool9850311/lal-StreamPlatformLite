@@ -411,7 +411,7 @@ func (s *ServerSession) doConnect(tid int, stream *Stream) error {
 	}
 	Log.Infof("[%s] < R connect('%s'). tcUrl=%s", s.UniqueKey(), s.appName, s.tcUrl)
 
-	s.observer.OnRtmpConnect(s, val)
+	// s.observer.OnRtmpConnect(s, val)
 
 	Log.Infof("[%s] > W Window Acknowledgement Size %d.", s.UniqueKey(), windowAcknowledgementSize)
 	if err := s.packer.writeWinAckSize(s.conn, windowAcknowledgementSize); err != nil {
@@ -482,10 +482,10 @@ func (s *ServerSession) doPublish(tid int, stream *Stream) (err error) {
 	// 回复完信令后修改 connection 的属性
 	s.modConnProps()
 
-	err = s.observer.OnNewRtmpPubSession(s)
-	if err != nil {
-		s.DisposeByObserverFlag = true
-	}
+	// err = s.observer.OnNewRtmpPubSession(s)
+	// if err != nil {
+	// 	s.DisposeByObserverFlag = true
+	// }
 	return err
 }
 
@@ -524,10 +524,10 @@ func (s *ServerSession) doPlay(tid int, stream *Stream) (err error) {
 	// 回复完信令后修改 connection 的属性
 	s.modConnProps()
 
-	err = s.observer.OnNewRtmpSubSession(s)
-	if err != nil {
-		s.DisposeByObserverFlag = true
-	}
+	// err = s.observer.OnNewRtmpSubSession(s)
+	// if err != nil {
+	// 	s.DisposeByObserverFlag = true
+	// }
 	return err
 }
 
