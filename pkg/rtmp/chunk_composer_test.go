@@ -70,12 +70,12 @@ func TestChunkComposer(t *testing.T) {
 
 	go cc.RunLoop(rb, func(stream *Stream) error {
 		if stream.header.MsgTypeId == base.RtmpTypeIdVideo {
-			assert.Equal(t, videoMsg.Header.TimestampAbs, stream.toAvMsg().Header.TimestampAbs)
+			assert.Equal(t, videoMsg.Header.TimestampAbs, stream.ToAvMsg().Header.TimestampAbs)
 			assert.Equal(t, videoMsg.Payload, stream.msg.buff.Bytes())
 			c--
 		} else if stream.header.MsgTypeId == base.RtmpTypeIdAudio {
-			assert.Equal(t, audioMsg.Header.TimestampAbs, stream.toAvMsg().Header.TimestampAbs)
-			assert.Equal(t, audioMsg.Payload, stream.toAvMsg().Payload)
+			assert.Equal(t, audioMsg.Header.TimestampAbs, stream.ToAvMsg().Header.TimestampAbs)
+			assert.Equal(t, audioMsg.Payload, stream.ToAvMsg().Payload)
 			c--
 		}
 

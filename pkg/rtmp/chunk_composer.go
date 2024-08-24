@@ -196,7 +196,7 @@ func (c *ChunkComposer) RunLoop(reader io.Reader, cb OnCompleteMessage) error {
 			}
 			stream.absTsFlag = false
 			if Log.GetOption().Level == nazalog.LevelTrace {
-				tmpMsg := stream.toAvMsg()
+				tmpMsg := stream.ToAvMsg()
 				maxLength := 32
 				if tmpMsg.IsVideoKeySeqHeader() || tmpMsg.IsAacSeqHeader() {
 					maxLength = 128

@@ -239,7 +239,7 @@ func (s *ServerSession) doMsg(stream *Stream) error {
 		if s.sessionStat.BaseType() != base.SessionBaseTypePubStr {
 			err = nazaerrors.Wrap(base.ErrRtmpUnexpectedMsg)
 		}
-		s.avObserver.OnReadRtmpAvMsg(stream.toAvMsg())
+		s.avObserver.OnReadRtmpAvMsg(stream.ToAvMsg())
 	default:
 		Log.Warnf("[%s] read unknown message. stream=%s, msg=%s", s.UniqueKey(), stream.toDebugString(), hex.EncodeToString(refForDebugLog))
 
@@ -297,7 +297,7 @@ func (s *ServerSession) doDataMessageAmf0(stream *Stream) error {
 		return nil
 	default:
 	}
-	s.avObserver.OnReadRtmpAvMsg(stream.toAvMsg())
+	s.avObserver.OnReadRtmpAvMsg(stream.ToAvMsg())
 	return nil
 
 	// TODO chef: 下面注释掉的代码包含的逻辑：

@@ -376,7 +376,7 @@ func (s *ClientSession) doMsg(stream *Stream) error {
 	case base.RtmpTypeIdAudio:
 		fallthrough
 	case base.RtmpTypeIdVideo:
-		s.onReadRtmpAvMsg(stream.toAvMsg())
+		s.onReadRtmpAvMsg(stream.ToAvMsg())
 	default:
 		Log.Errorf("[%s] read unknown message. typeid=%d, %s", s.UniqueKey(), stream.header.MsgTypeId, stream.toDebugString())
 		panic(0)
@@ -417,7 +417,7 @@ func (s *ClientSession) doDataMessageAmf0(stream *Stream) error {
 		return nil
 	default:
 	}
-	s.onReadRtmpAvMsg(stream.toAvMsg())
+	s.onReadRtmpAvMsg(stream.ToAvMsg())
 	return nil
 }
 

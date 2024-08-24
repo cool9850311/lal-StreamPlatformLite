@@ -41,7 +41,7 @@ func (stream *Stream) toDebugString() string {
 		stream.header, stream.msg.buff.DebugString(), hex.Dump(stream.msg.buff.Peek(4096)))
 }
 
-func (stream *Stream) toAvMsg() base.RtmpMsg {
+func (stream *Stream) ToAvMsg() base.RtmpMsg {
 	// TODO chef: 考虑可能出现header中的len和buf的大小不一致的情况
 	if stream.header.MsgLen != uint32(stream.msg.buff.Len()) {
 		Log.Errorf("toAvMsg. headerMsgLen=%d, bufLen=%d", stream.header.MsgLen, stream.msg.buff.Len())
