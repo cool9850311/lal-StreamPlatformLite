@@ -1,5 +1,5 @@
 // Copyright 2020, Chef.  All rights reserved.
-// https://github.com/q191201771/lal
+// https://github.com/cool9850311/lal-StreamPlatformLite
 //
 // Use of this source code is governed by a MIT-style license
 // that can be found in the License file.
@@ -11,11 +11,11 @@ package remux
 import (
 	"encoding/hex"
 
-	"github.com/q191201771/lal/pkg/aac"
-	"github.com/q191201771/lal/pkg/avc"
-	"github.com/q191201771/lal/pkg/base"
-	"github.com/q191201771/lal/pkg/hevc"
-	"github.com/q191201771/lal/pkg/mpegts"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/aac"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/avc"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/base"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/hevc"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/mpegts"
 	"github.com/q191201771/naza/pkg/nazabytes"
 	"github.com/q191201771/naza/pkg/nazalog"
 )
@@ -255,7 +255,7 @@ func (s *Rtmp2MpegtsRemuxer) feedVideo(msg base.RtmpMsg) {
 		//
 		// sps pps
 		// 注意，有的流，seq header中的sps和pps是错误的，需要从nals里获取sps pps并更新
-		// 见 https://github.com/q191201771/lal/issues/143
+		// 见 https://github.com/cool9850311/lal-StreamPlatformLite/issues/143
 		//
 		// TODO(chef): rtmp转其他类型的模块也存在这个问题，应该抽象出一个统一处理的地方
 		//

@@ -1,4 +1,4 @@
-module github.com/q191201771/lal
+module github.com/cool9850311/lal-StreamPlatformLite
 
 go 1.18
 

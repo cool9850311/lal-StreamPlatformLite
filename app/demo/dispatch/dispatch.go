@@ -1,5 +1,5 @@
 // Copyright 2020, Chef.  All rights reserved.
-// https://github.com/q191201771/lal
+// https://github.com/cool9850311/lal-StreamPlatformLite
 //
 // Use of this source code is governed by a MIT-style license
 // that can be found in the License file.
@@ -12,16 +12,17 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/q191201771/lal/app/demo/dispatch/datamanager"
-	"github.com/q191201771/lal/pkg/base"
-	"github.com/q191201771/naza/pkg/nazahttp"
-	"github.com/q191201771/naza/pkg/nazalog"
-	"github.com/q191201771/naza/pkg/unique"
 	"io"
 	"net"
 	"net/http"
 	"os"
 	"strings"
+
+	"github.com/cool9850311/lal-StreamPlatformLite/app/demo/dispatch/datamanager"
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/base"
+	"github.com/q191201771/naza/pkg/nazahttp"
+	"github.com/q191201771/naza/pkg/nazalog"
+	"github.com/q191201771/naza/pkg/unique"
 )
 
 //

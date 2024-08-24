@@ -4,7 +4,7 @@
   "rtmp": {
     "enable": true,
     "addr": ":1935",
-    "rtmps_enable": true,
+    "rtmps_enable": false,
     "rtmps_addr": ":4935",
     "rtmps_cert_file": "./conf/cert.pem",
     "rtmps_key_file": "./conf/key.pem",
@@ -24,14 +24,14 @@
   },
   "httpflv": {
     "enable": true,
-    "enable_https": true,
+    "enable_https": false,
     "url_pattern": "/",
     "gop_num": 0,
     "single_gop_max_frame_num": 0
   },
   "hls": {
     "enable": true,
-    "enable_https": true,
+    "enable_https": false,
     "url_pattern": "/hls/",
     "out_path": "./lal_record/hls/",
     "fragment_duration_ms": 3000,

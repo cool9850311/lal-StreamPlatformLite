@@ -1,5 +1,5 @@
 // Copyright 2023, Chef.  All rights reserved.
-// https://github.com/q191201771/lal
+// https://github.com/cool9850311/lal-StreamPlatformLite
 //
 // Use of this source code is governed by a MIT-style license
 // that can be found in the License file.
@@ -9,10 +9,11 @@
 package base_test
 
 import (
-	"github.com/q191201771/lal/pkg/base"
-	"github.com/q191201771/naza/pkg/nazalog"
 	"io"
 	"testing"
+
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/base"
+	"github.com/q191201771/naza/pkg/nazalog"
 )
 
 func TestDumpFile_WriteWithType(t *testing.T) {

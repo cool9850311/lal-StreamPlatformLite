@@ -1,5 +1,5 @@
 // Copyright 2022, Chef.  All rights reserved.
-// https://github.com/q191201771/lal
+// https://github.com/cool9850311/lal-StreamPlatformLite
 //
 // Use of this source code is governed by a MIT-style license
 // that can be found in the License file.
@@ -9,12 +9,13 @@
 package hls
 
 import (
-	"github.com/q191201771/naza/pkg/nazaatomic"
 	"net/http"
 	"strings"
 	"time"
 
-	"github.com/q191201771/lal/pkg/base"
+	"github.com/q191201771/naza/pkg/nazaatomic"
+
+	"github.com/cool9850311/lal-StreamPlatformLite/pkg/base"
 	"github.com/q191201771/naza/pkg/connection"
 	"github.com/q191201771/naza/pkg/nazamd5"
 )

@@ -1,5 +1,5 @@
 // Copyright 2022, Chef.  All rights reserved.
-// https://github.com/q191201771/lal
+// https://github.com/cool9850311/lal-StreamPlatformLite
 //
 // Use of this source code is governed by a MIT-style license
 // that can be found in the License file.
@@ -14,5 +14,5 @@ var Log = nazalog.GetGlobalLogger()
 
 // StrategyTryAnnexbWhenParseVspFromSeqHeaderFailed 从seq header中解析vps/sps/pps失败时，尝试按annexb格式解析
 //
-// https://github.com/q191201771/lal/pull/353
+// https://github.com/cool9850311/lal-StreamPlatformLite/pull/353
 var StrategyTryAnnexbWhenParseVspFromSeqHeaderFailed = true
