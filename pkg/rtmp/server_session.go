@@ -224,7 +224,7 @@ func (s *ServerSession) doMsg(stream *Stream) error {
 		// noop
 		// 因为底层的 chunk composer 已经处理过了，这里就不用处理
 	case base.RtmpTypeIdCommandMessageAmf0:
-		err = s.doCommandMessage(stream)
+		err = s.DoCommandMessage(stream)
 	case base.RtmpTypeIdCommandMessageAmf3:
 		err = s.doCommandAmf3Message(stream)
 	case base.RtmpTypeIdMetadata:
@@ -334,7 +334,7 @@ func (s *ServerSession) doDataMessageAmf0(stream *Stream) error {
 	//return nil
 }
 
-func (s *ServerSession) doCommandMessage(stream *Stream) error {
+func (s *ServerSession) DoCommandMessage(stream *Stream) error {
 	cmd, err := stream.msg.readStringWithType()
 	if err != nil {
 		return err
@@ -372,7 +372,7 @@ func (s *ServerSession) doCommandMessage(stream *Stream) error {
 func (s *ServerSession) doCommandAmf3Message(stream *Stream) error {
 	//去除前面的0就是Amf0的数据
 	stream.msg.Skip(1)
-	return s.doCommandMessage(stream)
+	return s.DoCommandMessage(stream)
 }
 func (s *ServerSession) writeAcknowledgementIfNeeded(stream *Stream) error {
 	if s.peerWinAckSize <= 0 {
