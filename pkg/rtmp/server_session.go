@@ -98,13 +98,12 @@ type ServerSession struct {
 	seqNum         uint32
 }
 
-func NewServerSession(observer IServerSessionObserver, conn net.Conn) *ServerSession {
+func NewServerSession(conn net.Conn) *ServerSession {
 	s := &ServerSession{
 		conn: connection.New(conn, func(option *connection.Option) {
 			option.ReadBufSize = readBufSize
 		}),
 		sessionStat:             base.NewBasicSessionStat(base.SessionTypeRtmpServerSession, conn.RemoteAddr().String()),
-		observer:                observer,
 		chunkComposer:           NewChunkComposer(),
 		packer:                  NewMessagePacker(),
 		IsFresh:                 true,
@@ -114,13 +113,13 @@ func NewServerSession(observer IServerSessionObserver, conn net.Conn) *ServerSes
 	return s
 }
 
-func (s *ServerSession) RunLoop() (err error) {
+func (s *ServerSession) RunLoop(cm OnCompleteMessage) (err error) {
 	if err = s.handshake(); err != nil {
 		_ = s.dispose(err)
 		return err
 	}
 
-	err = s.runReadLoop()
+	err = s.runReadLoop(cm)
 	_ = s.dispose(err)
 
 	return err
@@ -186,8 +185,8 @@ func (s *ServerSession) IsAlive() (readAlive, writeAlive bool) {
 
 // ---------------------------------------------------------------------------------------------------------------------
 
-func (s *ServerSession) runReadLoop() error {
-	return s.chunkComposer.RunLoop(s.conn, s.doMsg)
+func (s *ServerSession) runReadLoop(cm OnCompleteMessage) error {
+	return s.chunkComposer.RunLoop(s.conn, cm)
 }
 
 func (s *ServerSession) handshake() error {

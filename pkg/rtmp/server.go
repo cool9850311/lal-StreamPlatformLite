@@ -11,8 +11,6 @@ package rtmp
 import (
 	"crypto/tls"
 	"net"
-
-	"github.com/cool9850311/lal-StreamPlatformLite/pkg/base"
 )
 
 type IServerObserver interface {
@@ -93,18 +91,18 @@ func (server *Server) Dispose() {
 
 func (server *Server) handleTcpConnect(conn net.Conn) {
 	Log.Infof("accept a rtmp connection. remoteAddr=%s", conn.RemoteAddr().String())
-	session := NewServerSession(server, conn)
-	_ = session.RunLoop()
+	// session := NewServerSession(server, conn)
+	// _ = session.RunLoop()
 
-	if session.DisposeByObserverFlag {
-		return
-	}
-	switch session.sessionStat.BaseType() {
-	case base.SessionBaseTypePubStr:
-		server.observer.OnDelRtmpPubSession(session)
-	case base.SessionBaseTypeSubStr:
-		server.observer.OnDelRtmpSubSession(session)
-	}
+	// if session.DisposeByObserverFlag {
+	// 	return
+	// }
+	// switch session.sessionStat.BaseType() {
+	// case base.SessionBaseTypePubStr:
+	// 	server.observer.OnDelRtmpPubSession(session)
+	// case base.SessionBaseTypeSubStr:
+	// 	server.observer.OnDelRtmpSubSession(session)
+	// }
 }
 
 // ----- IServerSessionObserver ------------------------------------------------------------------------------------
