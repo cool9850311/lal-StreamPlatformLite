@@ -20,7 +20,7 @@ import (
 // ----- Stream --------------------------------------------------------------------------------------------------------
 
 type Stream struct {
-	header base.RtmpHeader
+	Header base.RtmpHeader
 	msg    StreamMsg
 
 	absTsFlag bool   // 标记当这个stream收到新的msg的时候，是否收到过绝对时间
@@ -38,16 +38,16 @@ func NewStream() *Stream {
 // 序列化成可读字符串，一般用于发生错误时打印日志
 func (stream *Stream) toDebugString() string {
 	return fmt.Sprintf("header=%+v, b=%s, hex=%s",
-		stream.header, stream.msg.buff.DebugString(), hex.Dump(stream.msg.buff.Peek(4096)))
+		stream.Header, stream.msg.buff.DebugString(), hex.Dump(stream.msg.buff.Peek(4096)))
 }
 
 func (stream *Stream) toAvMsg() base.RtmpMsg {
 	// TODO chef: 考虑可能出现header中的len和buf的大小不一致的情况
-	if stream.header.MsgLen != uint32(stream.msg.buff.Len()) {
-		Log.Errorf("toAvMsg. headerMsgLen=%d, bufLen=%d", stream.header.MsgLen, stream.msg.buff.Len())
+	if stream.Header.MsgLen != uint32(stream.msg.buff.Len()) {
+		Log.Errorf("toAvMsg. headerMsgLen=%d, bufLen=%d", stream.Header.MsgLen, stream.msg.buff.Len())
 	}
 	return base.RtmpMsg{
-		Header:  stream.header,
+		Header:  stream.Header,
 		Payload: stream.msg.buff.Bytes(),
 	}
 }

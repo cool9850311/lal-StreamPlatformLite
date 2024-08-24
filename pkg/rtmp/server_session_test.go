@@ -85,7 +85,7 @@ func TestServerSession_doMsg(t *testing.T) {
 
 	// publish信令中没有pub type
 	// {Csid:5 MsgLen:39 MsgTypeId:20 MsgStreamId:1 TimestampAbs:0}
-	stream.header.MsgTypeId = 20
+	stream.Header.MsgTypeId = 20
 	//b, _ := hex.DecodeString("0200077075626c69736800400800000000000005020009696e6e6572746573740200046c697665")
 	b, _ := hex.DecodeString("0200077075626c69736800400800000000000005020009696e6e657274657374")
 	stream.msg.buff.Write(b)

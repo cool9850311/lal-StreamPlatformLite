@@ -218,7 +218,7 @@ func (s *ServerSession) doMsg(stream *Stream) error {
 		return err
 	}
 
-	switch stream.header.MsgTypeId {
+	switch stream.Header.MsgTypeId {
 	case base.RtmpTypeIdWinAckSize:
 		err = s.doWinAckSize(stream)
 	case base.RtmpTypeIdSetChunkSize:

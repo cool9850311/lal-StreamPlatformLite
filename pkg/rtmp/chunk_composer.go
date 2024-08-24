@@ -102,13 +102,13 @@ func (c *ChunkComposer) RunLoop(reader io.Reader, cb OnCompleteMessage) error {
 			}
 			// 包头中为绝对时间戳
 			stream.timestamp = bele.BeUint24(bootstrap)
-			stream.header.TimestampAbs = stream.timestamp
+			stream.Header.TimestampAbs = stream.timestamp
 			stream.absTsFlag = true
-			stream.header.MsgLen = bele.BeUint24(bootstrap[3:])
-			stream.header.MsgTypeId = bootstrap[6]
-			stream.header.MsgStreamId = int(bele.LeUint32(bootstrap[7:]))
+			stream.Header.MsgLen = bele.BeUint24(bootstrap[3:])
+			stream.Header.MsgTypeId = bootstrap[6]
+			stream.Header.MsgStreamId = int(bele.LeUint32(bootstrap[7:]))
 
-			stream.msg.Grow(stream.header.MsgLen)
+			stream.msg.Grow(stream.Header.MsgLen)
 		case 1:
 			if _, err := io.ReadAtLeast(reader, bootstrap[:7], 7); err != nil {
 				return err
@@ -116,10 +116,10 @@ func (c *ChunkComposer) RunLoop(reader io.Reader, cb OnCompleteMessage) error {
 			// 包头中为相对时间戳
 			stream.timestamp = bele.BeUint24(bootstrap)
 			//stream.header.TimestampAbs += stream.header.Timestamp
-			stream.header.MsgLen = bele.BeUint24(bootstrap[3:])
-			stream.header.MsgTypeId = bootstrap[6]
+			stream.Header.MsgLen = bele.BeUint24(bootstrap[3:])
+			stream.Header.MsgTypeId = bootstrap[6]
 
-			stream.msg.Grow(stream.header.MsgLen)
+			stream.msg.Grow(stream.Header.MsgLen)
 		case 2:
 			if _, err := io.ReadAtLeast(reader, bootstrap[:3], 3); err != nil {
 				return err
@@ -133,7 +133,7 @@ func (c *ChunkComposer) RunLoop(reader io.Reader, cb OnCompleteMessage) error {
 		}
 		if Log.GetOption().Level == nazalog.LevelTrace {
 			Log.Tracef("[%p] RTMP_READ chunk.fmt=%d, csid=%d, header=%+v, timestamp=%d",
-				c, fmt, csid, stream.header, stream.timestamp)
+				c, fmt, csid, stream.Header, stream.timestamp)
 		}
 
 		// 5.3.1.3 Extended Timestamp
@@ -150,26 +150,26 @@ func (c *ChunkComposer) RunLoop(reader io.Reader, cb OnCompleteMessage) error {
 			newTs := bele.BeUint32(bootstrap)
 			if Log.GetOption().Level == nazalog.LevelTrace {
 				Log.Tracef("[%p] RTMP_READ ext. ts=(%d,%d,%d)",
-					c, stream.timestamp, newTs, stream.header.TimestampAbs)
+					c, stream.timestamp, newTs, stream.Header.TimestampAbs)
 			}
 			stream.timestamp = newTs
 			switch fmt {
 			case 0:
-				stream.header.TimestampAbs = stream.timestamp
+				stream.Header.TimestampAbs = stream.timestamp
 			case 1:
 				fallthrough
 			case 2:
-				stream.header.TimestampAbs = stream.header.TimestampAbs - maxTimestampInMessageHeader + stream.timestamp
+				stream.Header.TimestampAbs = stream.Header.TimestampAbs - maxTimestampInMessageHeader + stream.timestamp
 			case 3:
 				// noop
 			}
 		}
 
 		var neededSize uint32
-		if stream.header.MsgLen <= c.peerChunkSize {
-			neededSize = stream.header.MsgLen
+		if stream.Header.MsgLen <= c.peerChunkSize {
+			neededSize = stream.Header.MsgLen
 		} else {
-			neededSize = stream.header.MsgLen - stream.msg.Len()
+			neededSize = stream.Header.MsgLen - stream.msg.Len()
 			if neededSize > c.peerChunkSize {
 				neededSize = c.peerChunkSize
 			}
@@ -180,19 +180,19 @@ func (c *ChunkComposer) RunLoop(reader io.Reader, cb OnCompleteMessage) error {
 		}
 		stream.msg.Flush(neededSize)
 
-		if stream.msg.Len() == stream.header.MsgLen {
+		if stream.msg.Len() == stream.Header.MsgLen {
 			// 对端设置了chunk size
-			if stream.header.MsgTypeId == base.RtmpTypeIdSetChunkSize {
+			if stream.Header.MsgTypeId == base.RtmpTypeIdSetChunkSize {
 				if buf := stream.msg.buff.Bytes(); len(buf) >= 4 {
 					val := bele.BeUint32(buf)
 					c.SetPeerChunkSize(val)
 				}
 			}
 
-			stream.header.Csid = csid
+			stream.Header.Csid = csid
 			if !stream.absTsFlag {
 				// 这么处理相当于取最后一个chunk的时间戳差值，有的协议栈是取的第一个，正常来说都可以
-				stream.header.TimestampAbs += stream.timestamp
+				stream.Header.TimestampAbs += stream.timestamp
 			}
 			stream.absTsFlag = false
 			if Log.GetOption().Level == nazalog.LevelTrace {
@@ -202,10 +202,10 @@ func (c *ChunkComposer) RunLoop(reader io.Reader, cb OnCompleteMessage) error {
 					maxLength = 128
 				}
 				Log.Tracef("[%p] RTMP_READ cb. fmt=%d, csid=%d, header=%+v, timestamp=%d, hex=%s",
-					c, fmt, csid, stream.header, stream.timestamp, hex.Dump(nazabytes.Prefix(stream.msg.buff.Bytes(), maxLength)))
+					c, fmt, csid, stream.Header, stream.timestamp, hex.Dump(nazabytes.Prefix(stream.msg.buff.Bytes(), maxLength)))
 			}
 
-			if stream.header.MsgTypeId == base.RtmpTypeIdAggregateMessage {
+			if stream.Header.MsgTypeId == base.RtmpTypeIdAggregateMessage {
 				firstSubMessage := true
 				baseTimestamp := uint32(0)
 
@@ -213,22 +213,22 @@ func (c *ChunkComposer) RunLoop(reader io.Reader, cb OnCompleteMessage) error {
 				if aggregateStream == nil {
 					aggregateStream = NewStream()
 				}
-				aggregateStream.header.Csid = stream.header.Csid
+				aggregateStream.Header.Csid = stream.Header.Csid
 
 				for stream.msg.Len() != 0 {
 					// 读取sub message的头
 					if stream.msg.Len() < 11 {
 						return base.NewErrRtmpShortBuffer(11, int(stream.msg.Len()), "parse rtmp aggregate sub message len")
 					}
-					aggregateStream.header.MsgTypeId = stream.msg.buff.Bytes()[0]
+					aggregateStream.Header.MsgTypeId = stream.msg.buff.Bytes()[0]
 					stream.msg.Skip(1)
-					aggregateStream.header.MsgLen = bele.BeUint24(stream.msg.buff.Bytes())
+					aggregateStream.Header.MsgLen = bele.BeUint24(stream.msg.buff.Bytes())
 					stream.msg.Skip(3)
 					aggregateStream.timestamp = bele.BeUint24(stream.msg.buff.Bytes())
 					stream.msg.Skip(3)
 					aggregateStream.timestamp += uint32(stream.msg.buff.Bytes()[0]) << 24
 					stream.msg.Skip(1)
-					aggregateStream.header.MsgStreamId = int(bele.BeUint24(stream.msg.buff.Bytes()))
+					aggregateStream.Header.MsgStreamId = int(bele.BeUint24(stream.msg.buff.Bytes()))
 					stream.msg.Skip(3)
 
 					// 计算时间戳
@@ -236,14 +236,14 @@ func (c *ChunkComposer) RunLoop(reader io.Reader, cb OnCompleteMessage) error {
 						baseTimestamp = aggregateStream.timestamp
 						firstSubMessage = false
 					}
-					aggregateStream.header.TimestampAbs = stream.header.TimestampAbs + aggregateStream.timestamp - baseTimestamp
+					aggregateStream.Header.TimestampAbs = stream.Header.TimestampAbs + aggregateStream.timestamp - baseTimestamp
 
 					// message包体
-					if stream.msg.Len() < aggregateStream.header.MsgLen {
-						return base.NewErrRtmpShortBuffer(int(aggregateStream.header.MsgLen), int(stream.msg.Len()), "parse rtmp aggregate sub message body")
+					if stream.msg.Len() < aggregateStream.Header.MsgLen {
+						return base.NewErrRtmpShortBuffer(int(aggregateStream.Header.MsgLen), int(stream.msg.Len()), "parse rtmp aggregate sub message body")
 					}
-					aggregateStream.msg.buff = nazabytes.NewBufferRefBytes(stream.msg.buff.Peek(int(aggregateStream.header.MsgLen)))
-					stream.msg.Skip(aggregateStream.header.MsgLen)
+					aggregateStream.msg.buff = nazabytes.NewBufferRefBytes(stream.msg.buff.Peek(int(aggregateStream.Header.MsgLen)))
+					stream.msg.Skip(aggregateStream.Header.MsgLen)
 
 					// sub message回调给上层
 					if err := cb(aggregateStream); err != nil {
@@ -270,8 +270,8 @@ func (c *ChunkComposer) RunLoop(reader io.Reader, cb OnCompleteMessage) error {
 		}
 
 		// TODO(chef): 这里应该永远执行不到，可以删除掉
-		if stream.msg.Len() > stream.header.MsgLen {
-			return base.NewErrRtmpShortBuffer(int(stream.header.MsgLen), int(stream.msg.Len()), "len of msg bigger than msg len of header")
+		if stream.msg.Len() > stream.Header.MsgLen {
+			return base.NewErrRtmpShortBuffer(int(stream.Header.MsgLen), int(stream.msg.Len()), "len of msg bigger than msg len of header")
 		}
 	}
 }

@@ -358,7 +358,7 @@ func (s *ClientSession) doMsg(stream *Stream) error {
 		return err
 	}
 
-	switch stream.header.MsgTypeId {
+	switch stream.Header.MsgTypeId {
 	case base.RtmpTypeIdWinAckSize:
 		fallthrough
 	case base.RtmpTypeIdBandwidth:
@@ -378,7 +378,7 @@ func (s *ClientSession) doMsg(stream *Stream) error {
 	case base.RtmpTypeIdVideo:
 		s.onReadRtmpAvMsg(stream.toAvMsg())
 	default:
-		Log.Errorf("[%s] read unknown message. typeid=%d, %s", s.UniqueKey(), stream.header.MsgTypeId, stream.toDebugString())
+		Log.Errorf("[%s] read unknown message. typeid=%d, %s", s.UniqueKey(), stream.Header.MsgTypeId, stream.toDebugString())
 		panic(0)
 	}
 	return nil
@@ -619,7 +619,7 @@ func (s *ClientSession) doProtocolControlMessage(stream *Stream) error {
 	}
 	val := int(bele.BeUint32(stream.msg.buff.Bytes()))
 
-	switch stream.header.MsgTypeId {
+	switch stream.Header.MsgTypeId {
 	case base.RtmpTypeIdWinAckSize:
 		s.option.PeerWinAckSize = val
 		Log.Infof("[%s] < R Window Acknowledgement Size: %d", s.UniqueKey(), s.option.PeerWinAckSize)
@@ -630,7 +630,7 @@ func (s *ClientSession) doProtocolControlMessage(stream *Stream) error {
 		// composer内部会自动更新peer chunk size.
 		Log.Infof("[%s] < R Set Chunk Size %d.", s.UniqueKey(), val)
 	default:
-		Log.Errorf("[%s] read unknown protocol control message. typeid=%d, %s", s.UniqueKey(), stream.header.MsgTypeId, stream.toDebugString())
+		Log.Errorf("[%s] read unknown protocol control message. typeid=%d, %s", s.UniqueKey(), stream.Header.MsgTypeId, stream.toDebugString())
 	}
 	return nil
 }
