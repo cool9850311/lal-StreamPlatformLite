@@ -69,11 +69,11 @@ func TestChunkComposer(t *testing.T) {
 	c := 2
 
 	go cc.RunLoop(rb, func(stream *Stream) error {
-		if stream.header.MsgTypeId == base.RtmpTypeIdVideo {
+		if stream.Header.MsgTypeId == base.RtmpTypeIdVideo {
 			assert.Equal(t, videoMsg.Header.TimestampAbs, stream.ToAvMsg().Header.TimestampAbs)
 			assert.Equal(t, videoMsg.Payload, stream.msg.buff.Bytes())
 			c--
-		} else if stream.header.MsgTypeId == base.RtmpTypeIdAudio {
+		} else if stream.Header.MsgTypeId == base.RtmpTypeIdAudio {
 			assert.Equal(t, audioMsg.Header.TimestampAbs, stream.ToAvMsg().Header.TimestampAbs)
 			assert.Equal(t, audioMsg.Payload, stream.ToAvMsg().Payload)
 			c--
