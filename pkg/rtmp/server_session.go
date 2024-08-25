@@ -219,20 +219,20 @@ func (s *ServerSession) doMsg(stream *Stream) error {
 
 	switch stream.Header.MsgTypeId {
 	case base.RtmpTypeIdWinAckSize:
-		err = s.doWinAckSize(stream)
+		err = s.DoWinAckSize(stream)
 	case base.RtmpTypeIdSetChunkSize:
 		// noop
 		// 因为底层的 chunk composer 已经处理过了，这里就不用处理
 	case base.RtmpTypeIdCommandMessageAmf0:
 		err = s.DoCommandMessage(stream)
 	case base.RtmpTypeIdCommandMessageAmf3:
-		err = s.doCommandAmf3Message(stream)
+		err = s.DoCommandAmf3Message(stream)
 	case base.RtmpTypeIdMetadata:
-		err = s.doDataMessageAmf0(stream)
+		err = s.DoDataMessageAmf0(stream)
 	case base.RtmpTypeIdAck:
-		err = s.doAck(stream)
+		err = s.DoAck(stream)
 	case base.RtmpTypeIdUserControl:
-		err = s.doUserControl(stream)
+		err = s.DoUserControl(stream)
 	case base.RtmpTypeIdAudio:
 		fallthrough
 	case base.RtmpTypeIdVideo:
@@ -252,7 +252,7 @@ func (s *ServerSession) doMsg(stream *Stream) error {
 	return err
 }
 
-func (s *ServerSession) doWinAckSize(stream *Stream) error {
+func (s *ServerSession) DoWinAckSize(stream *Stream) error {
 	if stream.msg.Len() < 4 {
 		return base.NewErrRtmpShortBuffer(4, int(stream.msg.Len()), "ServerSession::doWinAckSize")
 	}
@@ -262,7 +262,7 @@ func (s *ServerSession) doWinAckSize(stream *Stream) error {
 	return nil
 }
 
-func (s *ServerSession) doAck(stream *Stream) error {
+func (s *ServerSession) DoAck(stream *Stream) error {
 	buf := stream.msg.buff.Bytes()
 	if len(buf) < 4 {
 		return base.ErrRtmpShortBuffer
@@ -271,7 +271,7 @@ func (s *ServerSession) doAck(stream *Stream) error {
 	Log.Infof("[%s] < R Acknowledgement. ignore. sequence number=%d.", s.UniqueKey(), seqNum)
 	return nil
 }
-func (s *ServerSession) doUserControl(stream *Stream) error {
+func (s *ServerSession) DoUserControl(stream *Stream) error {
 	// TODO(chef): 检查buff长度有效性 202301
 	userControlType := bele.BeUint16(stream.msg.buff.Bytes())
 	if userControlType == uint16(base.RtmpUserControlPingRequest) {
@@ -281,7 +281,7 @@ func (s *ServerSession) doUserControl(stream *Stream) error {
 	}
 	return nil
 }
-func (s *ServerSession) doDataMessageAmf0(stream *Stream) error {
+func (s *ServerSession) DoDataMessageAmf0(stream *Stream) error {
 	if s.sessionStat.BaseType() != base.SessionBaseTypePubStr {
 		return nazaerrors.Wrap(base.ErrRtmpUnexpectedMsg)
 	}
@@ -369,7 +369,7 @@ func (s *ServerSession) DoCommandMessage(stream *Stream) error {
 	return nil
 }
 
-func (s *ServerSession) doCommandAmf3Message(stream *Stream) error {
+func (s *ServerSession) DoCommandAmf3Message(stream *Stream) error {
 	//去除前面的0就是Amf0的数据
 	stream.msg.Skip(1)
 	return s.DoCommandMessage(stream)
