@@ -297,7 +297,7 @@ func (s *ServerSession) DoDataMessageAmf0(stream *Stream) error {
 		return nil
 	default:
 	}
-	s.avObserver.OnReadRtmpAvMsg(stream.ToAvMsg())
+	// s.avObserver.OnReadRtmpAvMsg(stream.ToAvMsg())
 	return nil
 
 	// TODO chef: 下面注释掉的代码包含的逻辑：
